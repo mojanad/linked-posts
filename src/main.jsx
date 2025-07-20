@@ -1,13 +1,6 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './global.css'
+import { createRoot } from "react-dom/client";
+import "./global.css";
+import AppRouter from "./router/AppRouter";
 
-const SECRET = import.meta.env.VITE_SECRET
-console.log("🚀 ~ SECRET:", SECRET) // Will now log: my-secret-123
-console.log("All env vars:", import.meta.env)
-
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <h1>hello</h1>
-  </StrictMode>,
-)
+// router handling and add to the main view in the index.html with main.jsx
+createRoot(document.getElementById("root")).render(<AppRouter />);
