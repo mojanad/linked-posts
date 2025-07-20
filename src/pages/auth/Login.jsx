@@ -1,17 +1,19 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { Label, TextInput } from "flowbite-react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
 import { Link, useNavigate } from "react-router";
 import z from "zod";
 import AppButton from "../../components/shared/AppButton";
 import ErrorMessage from "../../components/shared/ErrorMessage.jsx";
+import { userContext } from "../../ context/UserContext.jsx";
 
 export default function Login() {
-  const navigate = useNavigate()
-  const [isLoading, setIsLoading] = useState(false)
+  const navigate = useNavigate();
+  const { getUserData } = useContext(userContext);
+  const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -26,7 +28,7 @@ export default function Login() {
   });
 
   const loginUser = async (loginData) => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
       const { data } = await axios(
         "https://linked-posts.routemisr.com/users/signin",
@@ -35,16 +37,17 @@ export default function Login() {
           data: loginData,
         }
       );
-      console.log("🚀 ~ loginUser ~ data:", data)
-      localStorage.setItem("token", data.token);
-      toast.success("Login successful")
-      setIsLoading(false)
-      navigate("/")
+
+      localStorage.setItem("token", data?.token);
+      toast.success("Login successful");
+      setIsLoading(false);
+      getUserData(data?.token);
+      navigate("/");
     } catch (error) {
       console.log("error", error.response.data.error);
-      toast.error(error.response.data.error)
+      toast.error(error.response.data.error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   };
   return (
@@ -85,7 +88,9 @@ export default function Login() {
         <p>
           do not have an account? <Link to="/register">register</Link>
         </p>
-        <AppButton type="submit" color="dark" isLoading={isLoading}>Login</AppButton>
+        <AppButton type="submit" color="dark" isLoading={isLoading}>
+          Login
+        </AppButton>
       </form>
       <Toaster position="top-center" reverseOrder={false} />
     </main>
