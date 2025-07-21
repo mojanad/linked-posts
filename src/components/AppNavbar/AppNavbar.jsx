@@ -15,7 +15,6 @@ import AppButton from "../shared/AppButton";
 export default function AppNavbar() {
   const { userData, getUserData, isLoadingUserData, logout } =
     useContext(userContext);
-  console.log("🚀 ~ AppNavbar ~ userData:", userData);
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -37,13 +36,13 @@ export default function AppNavbar() {
           className="grow"
           size="sm"
         />
-
-        {isLoadingUserData && localStorage.getItem("token") && (
+        {/* todo: enhance loading functionality */}
+        {isLoadingUserData && (
           <h4 className="w-40">
             <Skeleton />
           </h4>
         )}
-        {userData && (
+        {userData ? (
           <div className="flex items-center gap-2">
             <div className="bg-gray-200 w-8 rounded-xl overflow-hidden">
               <img src={userData?.photo} alt={userData?.name} />
@@ -56,6 +55,8 @@ export default function AppNavbar() {
               <LogoutCurve size="32" color="#FF8A65" />
             </AppButton>
           </div>
+        ) : (
+          <Link to={"/login"}>login</Link>
         )}
       </div>
       {/* <NavbarToggle />
