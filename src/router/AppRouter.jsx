@@ -3,9 +3,9 @@ import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
 import Layout from "../pages/Layout/Layout.jsx";
 import Posts from "../pages/posts/Posts.jsx";
-import { UserContextProvider } from "../ context/UserContext.jsx";
 import ProtectedRoutes from "./ProtectedRoutes.jsx";
-
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import PostDetails from "../pages/posts/PostDetails.jsx";
 const routing = createBrowserRouter([
   {
     path: "/",
@@ -35,12 +35,21 @@ const routing = createBrowserRouter([
           </ProtectedRoutes>
         ),
       },
+      {
+        path: "/posts/:postId",
+        element: (
+          <ProtectedRoutes>
+            <PostDetails />
+          </ProtectedRoutes>
+        ),
+      },
     ],
   },
 ]);
 
+const queryClient = new QueryClient()
 const AppRouter = () => {
-  return <RouterProvider router={routing} />;
+  return <QueryClientProvider client={queryClient}><RouterProvider router={routing} /></QueryClientProvider>;
 };
 
 export default AppRouter;

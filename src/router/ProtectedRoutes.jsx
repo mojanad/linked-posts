@@ -1,8 +1,10 @@
-import React from "react";
+import { useContext } from "react";
 import { Navigate } from "react-router";
+import { userContext } from '../ context/UserContext';
 
 export default function ProtectedRoutes({ children }) {
-  if (localStorage.getItem("token")) {
+  const { userData } = useContext(userContext)
+  if (localStorage.getItem("token") || userData) {
     return children;
   }
 
