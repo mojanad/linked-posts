@@ -4,6 +4,7 @@ import Register from "../pages/auth/Register";
 import Layout from "../pages/Layout/Layout.jsx";
 import Posts from "../pages/posts/Posts.jsx";
 import { UserContextProvider } from "../ context/UserContext.jsx";
+import ProtectedRoutes from "./ProtectedRoutes.jsx";
 
 const routing = createBrowserRouter([
   {
@@ -20,11 +21,19 @@ const routing = createBrowserRouter([
       },
       {
         index: true,
-        element: <Posts />,
+        element: (
+          <ProtectedRoutes>
+            <Posts />
+          </ProtectedRoutes>
+        ),
       },
       {
         path: "/posts",
-        element: <Posts />,
+        element: (
+          <ProtectedRoutes>
+            <Posts />
+          </ProtectedRoutes>
+        ),
       },
     ],
   },

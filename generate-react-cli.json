@@ -1,0 +1,23 @@
+{
+  "usesTypeScript": false,
+  "component": {
+    "default": {
+      "path": "src/components",
+      "withStyle": true,
+      "withTest": false,
+      "withStory": true,
+      "withLazy": false
+    },
+    "myCustomComponent": {
+      "customTemplates": {
+        "component": "templates/myCustomComponent/component.jsx",
+        "style": "templates/myCustomComponent/style.module.css"
+      },
+      "path": "src/pages",
+      "withStyle": true,
+      "withTest": false
+    }
+  },
+  "usesStyledComponents": true,
+  "testLibrary": "None"
+}

@@ -38,7 +38,7 @@ export default function AppNavbar() {
           size="sm"
         />
 
-        {isLoadingUserData && (
+        {isLoadingUserData && localStorage.getItem("token") && (
           <h4 className="w-40">
             <Skeleton />
           </h4>
