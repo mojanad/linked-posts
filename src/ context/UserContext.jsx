@@ -5,10 +5,11 @@ export const userContext = createContext(null);
 
 export function UserContextProvider({ children }) {
   const [userData, setUserData] = useState(null);
-  const [isLoadingUserData, setIsLoadingUserData] = useState(true);
+  const [isLoadingUserData, setIsLoadingUserData] = useState(false);
 
   // getting user data to use in the navbar
   const getUserData = async function (token) {
+    setIsLoadingUserData(true);
     try {
       const { data } = await axios(
         `${import.meta.env.VITE_API_URL}/users/profile-data`,
@@ -19,6 +20,7 @@ export function UserContextProvider({ children }) {
         }
       );
       setUserData(data?.user);
+      localStorage.setItem("userId", data?.user?._id);
       setIsLoadingUserData(false);
     } catch (error) {
       setIsLoadingUserData(false);
