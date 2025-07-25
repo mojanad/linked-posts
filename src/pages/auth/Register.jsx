@@ -1,10 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
-import { Button, Datepicker, Label, TextInput } from "flowbite-react";
+import { Button, Datepicker, Label, Select, TextInput } from "flowbite-react";
 import { Controller, useForm } from "react-hook-form";
-import  z  from "zod";
+import z from "zod";
 import ErrorMessage from "../../components/shared/ErrorMessage.jsx";
 import { Link } from "react-router";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Register() {
   const {
@@ -18,6 +19,7 @@ export default function Register() {
       z.object({
         name: z.string().min(1, "please"),
         email: z.string().email(),
+        gender: z.enum(["male", "female"]),
         password: z.string().min(8),
         rePassword: z
           .string()
@@ -39,12 +41,13 @@ export default function Register() {
         `${import.meta.env.VITE_API_URL}/users/signup`,
         {
           method: "POST",
-          body: signUpData,
+          data: signUpData,
         }
       );
-      console.log("data", data);
+      toast.success("user created successfully");
     } catch (error) {
       console.log("error", error);
+      toast.error(error.response.data.error);
     }
   };
   return (
@@ -74,6 +77,23 @@ export default function Register() {
             {...register("email")}
           />
           <ErrorMessage message={errors.email?.message} />
+        </div>
+        {/* gender ================================ */}
+        <div>
+          <div className="mb-2 block">
+            <Label htmlFor="gender">Your gender</Label>
+          </div>
+          <Select
+            id="gender"
+            type="gender"
+            placeholder="male"
+            shadow
+            {...register("gender")}
+          >
+            <option value={"male"}>male</option>
+            <option value={"female"}>female</option>
+          </Select>
+          <ErrorMessage message={errors.gender?.message} />
         </div>
         {/* password ================================ */}
         <div>
@@ -135,6 +155,7 @@ export default function Register() {
         </p>
         <Button type="submit">Register new account</Button>
       </form>
+      <Toaster />
     </main>
   );
 }
