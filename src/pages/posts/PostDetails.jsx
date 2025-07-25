@@ -25,7 +25,7 @@ export default function PostDetails() {
     }
   }
   return (
-    <div>
+    <div className="max-w-4xl mx-auto">
       {isLoading ? (
         <Skeleton className="h-[32rem]" />
       ) : (

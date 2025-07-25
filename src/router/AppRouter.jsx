@@ -6,6 +6,7 @@ import Posts from "../pages/posts/Posts.jsx";
 import ProtectedRoutes from "./ProtectedRoutes.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import PostDetails from "../pages/posts/PostDetails.jsx";
+import UserPosts from "../pages/posts/UserPosts.jsx";
 const routing = createBrowserRouter([
   {
     path: "/",
@@ -40,6 +41,14 @@ const routing = createBrowserRouter([
         element: (
           <ProtectedRoutes>
             <PostDetails />
+          </ProtectedRoutes>
+        ),
+      },
+      {
+        path: "/user-posts",
+        element: (
+          <ProtectedRoutes>
+            <UserPosts />
           </ProtectedRoutes>
         ),
       },
