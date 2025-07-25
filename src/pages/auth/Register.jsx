@@ -36,7 +36,7 @@ export default function Register() {
 
     try {
       const { data } = await axios(
-        "https://jsonplaceholder.typicode.com/users",
+        `${import.meta.env.VITE_API_URL}/users/signup`,
         {
           method: "POST",
           body: signUpData,
