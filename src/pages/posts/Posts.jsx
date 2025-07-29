@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import SinglePost from "../../components/Posts/SinglePost";
 import axios from "axios";
 import Skeleton from "react-loading-skeleton";
 import CreatePost from "../../components/Posts/CreatePost";
+import SinglePost from "../../components/Posts/SinglePost";
 
 export default function Posts() {
   const { data: allPosts, isLoading } = useQuery({
@@ -22,7 +22,6 @@ export default function Posts() {
       return error;
     }
   }
-
   return (
     <main className="p-4 max-w-4xl mx-auto">
       <CreatePost />

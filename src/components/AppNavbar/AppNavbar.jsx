@@ -1,23 +1,16 @@
-import {
-  Navbar,
-  NavbarBrand,
-  NavbarCollapse,
-  NavbarToggle,
-  TextInput,
-} from "flowbite-react";
+import { Navbar, NavbarBrand, TextInput } from "flowbite-react";
 import { Aave, LogoutCurve } from "iconsax-reactjs";
 import { useContext, useEffect } from "react";
+import Skeleton from "react-loading-skeleton";
 import { Link } from "react-router";
 import { userContext } from "../../ context/UserContext";
-import Skeleton from "react-loading-skeleton";
-import AppButton from "../shared/AppButton";
 import { useAuth } from "../../hooks/useAuth";
 
 export default function AppNavbar() {
+  const isLogin = useAuth();
   const { userData, getUserData, isLoadingUserData, logout } =
     useContext(userContext);
 
-  const auth = useAuth();
   const userProfile = window.location.origin;
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -44,7 +37,7 @@ export default function AppNavbar() {
           <h4 className="w-40">
             <Skeleton />
           </h4>
-        ) : userData ? (
+        ) : isLogin ? (
           <div className="flex items-center gap-2">
             <Link to={`${userProfile}/user-posts`}>
               <div className="bg-gray-200 w-8 rounded-xl overflow-hidden">
