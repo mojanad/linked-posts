@@ -1,17 +1,17 @@
-import React, { useContext, useRef } from "react";
-import { userContext } from "../../ context/UserContext";
+import axios from "axios";
 import { TextInput } from "flowbite-react";
 import { PictureFrame } from "iconsax-reactjs";
+import { useContext, useRef } from "react";
 import { useForm } from "react-hook-form";
-import AppButton from "../shared/AppButton";
 import toast, { Toaster } from "react-hot-toast";
-import axios from "axios";
+import { userContext } from "../../ context/UserContext";
+import AppButton from "../shared/AppButton";
 
 export default function CreatePost() {
   const { userData } = useContext(userContext);
   const fileUploadRef = useRef();
 
-  const { register, watch, setValue, handleSubmit } = useForm();
+  const { register, setValue, handleSubmit, watch } = useForm();
 
   async function submitPost(formValues) {
     const myFormData = new FormData();
@@ -19,7 +19,7 @@ export default function CreatePost() {
     myFormData.append("image", formValues.image);
 
     try {
-      const { data } = await axios(`${import.meta.env.VITE_API_URL}/posts`, {
+      await axios(`${import.meta.env.VITE_API_URL}/posts`, {
         method: "POST",
         data: myFormData,
         headers: {
@@ -27,7 +27,7 @@ export default function CreatePost() {
         },
       });
 
-      toast.success("Login successful");
+      toast.success("post created successful");
     } catch (error) {
       console.log("error", error?.response?.data.error);
       toast.error(error?.response?.data.error);
@@ -58,18 +58,30 @@ export default function CreatePost() {
               {...register("image")}
               type="file"
               className="hidden"
+              // link the input with  the ref 
               ref={fileUploadRef}
+              // update rect hook form value of image 
               onChange={(e) => setValue("image", e.target.files[0])}
-            />
+              />
             <PictureFrame
               size="32"
-              // color="#aaa"
               className="cursor-pointer text-zinc-400 hover:text-zinc-500 transition-colors"
+              // fire the file input if click 
               onClick={() => fileUploadRef?.current?.click()}
             />
           </div>
         </div>
-        <AppButton type="submit" className={"mx-4 mb-4"}>
+        <div>
+          {/* convert the image object to valid url */}
+          {watch("image") && (
+            <img
+              src={URL.createObjectURL(watch("image"))}
+              alt="image"
+              className="rounded-xl block mx-auto mb-2"
+            />
+          )}
+        </div>
+        <AppButton type="submit" color="dark" className={"mx-4 mb-4"}>
           create post
         </AppButton>
       </form>

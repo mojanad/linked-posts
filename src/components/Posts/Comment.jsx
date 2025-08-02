@@ -20,7 +20,7 @@ export default function Comment({ comment }) {
         },
       });
 
-      toast.success("Login successful");
+      toast.success("comment removed successful");
       queryClient.invalidateQueries({ queryKey: ["user-posts"] });
       setIsLoading(false);
     } catch (error) {

@@ -1,22 +1,20 @@
 import { Card } from "flowbite-react";
 import { MessageText1, More } from "iconsax-reactjs";
-import { Link, useNavigate, useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import Comment from "./Comment";
 import CreateComment from "./CreateComment";
-import { useId } from "react";
 
 export default function SinglePost({ data, isHome = false }) {
-  const router = useNavigate();
   const { postId } = useParams();
   return (
     <Card
-      // onClick={isHome ? () => router(`/posts/${data._id}`) : null}
       className="shadow-none border-none rounded-2xl my-4 "
     >
       {/* post header =========================== */}
       <div className="flex justify-between">
         <div className="flex  items-center gap-4">
           <div className="bg-gray-200 w-10 rounded-2xl overflow-hidden">
+            {/* post picture */}
             <img
               src={data?.user.photo}
               alt={data?.user.name}
@@ -25,6 +23,7 @@ export default function SinglePost({ data, isHome = false }) {
           </div>
           <div className="flex flex-col">
             <h4 className="font-semibold">{data?.user.name}</h4>
+          {/* post data  */}
             <p className="text-sm">
               {new Date(data?.createdAt).toLocaleDateString("en-US", {
                 day: "2-digit",
@@ -55,7 +54,7 @@ export default function SinglePost({ data, isHome = false }) {
         <span>{data?.comments.length} comment</span>
       </div>
       {isHome && data?.comments.length ? (
-        <Comment comment={data?.comments[0]} />
+        <Comment comment={data?.comments.reverse()[0]} />
       ) : (
         data?.comments?.map((c) => (
           <Comment key={c._id} comment={c} userId={data?.user?._id} />

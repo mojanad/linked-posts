@@ -5,10 +5,18 @@ import CreatePost from "../../components/Posts/CreatePost";
 import SinglePost from "../../components/Posts/SinglePost";
 
 export default function Posts() {
-  const { data: allPosts, isLoading } = useQuery({
+  const {
+    data: allPosts,
+    isLoading,
+    // isStale, check stale time ended or no
+  } = useQuery({
     queryKey: ["posts"],
     queryFn: getAllPosts,
     select: (data) => data.posts,
+    // staleTime: 5000,
+    // gcTime: 1000, // time to remove the cached data from ram
+    // select : refactor data
+
   });
 
   async function getAllPosts() {
