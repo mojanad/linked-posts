@@ -1,12 +1,13 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
 import Layout from "../pages/Layout/Layout.jsx";
-import Posts from "../pages/posts/Posts.jsx";
-import ProtectedRoutes from "./ProtectedRoutes.jsx";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import PostDetails from "../pages/posts/PostDetails.jsx";
+import Posts from "../pages/posts/Posts.jsx";
 import UserPosts from "../pages/posts/UserPosts.jsx";
+import ProtectedRoutes from "./ProtectedRoutes.jsx";
 const routing = createBrowserRouter([
   {
     path: "/",
@@ -56,9 +57,14 @@ const routing = createBrowserRouter([
   },
 ]);
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 const AppRouter = () => {
-  return <QueryClientProvider client={queryClient}><RouterProvider router={routing} /></QueryClientProvider>;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={routing} />
+      <ReactQueryDevtools />
+    </QueryClientProvider>
+  );
 };
 
 export default AppRouter;

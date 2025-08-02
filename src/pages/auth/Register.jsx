@@ -25,8 +25,7 @@ export default function Register() {
           .string()
           .min(8)
           .refine((data) => data === getValues("password"), {
-            message: "Passwords do not match",
-            path: ["rePassword"],
+            error: "Passwords do not match",
           }),
         dateOfBirth: z.string().min(1),
       })
@@ -34,16 +33,11 @@ export default function Register() {
   });
 
   const signUpUser = async (signUpData) => {
-    console.log("signUpUser", signUpData);
-
     try {
-      const { data } = await axios(
-        `${import.meta.env.VITE_API_URL}/users/signup`,
-        {
-          method: "POST",
-          data: signUpData,
-        }
-      );
+      await axios(`${import.meta.env.VITE_API_URL}/users/signup`, {
+        method: "POST",
+        data: signUpData,
+      });
       toast.success("user created successfully");
     } catch (error) {
       console.log("error", error);

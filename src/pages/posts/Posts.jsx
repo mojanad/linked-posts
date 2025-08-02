@@ -1,14 +1,22 @@
 import { useQuery } from "@tanstack/react-query";
-import SinglePost from "../../components/Posts/SinglePost";
 import axios from "axios";
 import Skeleton from "react-loading-skeleton";
 import CreatePost from "../../components/Posts/CreatePost";
+import SinglePost from "../../components/Posts/SinglePost";
 
 export default function Posts() {
-  const { data: allPosts, isLoading } = useQuery({
+  const {
+    data: allPosts,
+    isLoading,
+    // isStale, check stale time ended or no
+  } = useQuery({
     queryKey: ["posts"],
     queryFn: getAllPosts,
     select: (data) => data.posts,
+    // staleTime: 5000,
+    // gcTime: 1000, // time to remove the cached data from ram
+    // select : refactor data
+
   });
 
   async function getAllPosts() {
@@ -22,7 +30,6 @@ export default function Posts() {
       return error;
     }
   }
-
   return (
     <main className="p-4 max-w-4xl mx-auto">
       <CreatePost />

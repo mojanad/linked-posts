@@ -1,4 +1,4 @@
-import { Button, Spinner } from 'flowbite-react';
+import { Button, Spinner } from "flowbite-react";
 
 export default function AppButton({
   children,
@@ -9,6 +9,7 @@ export default function AppButton({
   return (
     <Button
       {...props}
+      color={props?.color || "dark"}
       className={`flex items-center gap-2 hover:cursor-pointer ${className}`}
       disabled={isLoading}
     >

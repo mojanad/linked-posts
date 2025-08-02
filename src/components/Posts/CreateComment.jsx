@@ -1,11 +1,11 @@
+import { useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { TextInput } from "flowbite-react";
-import React, { useContext, useRef, useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
 import { userContext } from "../../ context/UserContext";
 import AppButton from "../shared/AppButton";
-import { useQueryClient } from "@tanstack/react-query";
 
 export default function CreateComment({ postId }) {
   const queryClient = useQueryClient();
@@ -27,7 +27,7 @@ export default function CreateComment({ postId }) {
         },
       });
 
-      toast.success("Login successful");
+      toast.success("comment created successful");
       queryClient.invalidateQueries({ queryKey: ["user-posts"] });
       setIsLoading(false);
       // reset the comment content if the mutation success.
@@ -62,7 +62,12 @@ export default function CreateComment({ postId }) {
             />
           </div>
         </div>
-        <AppButton isLoading={isLoading} type="submit" className={"mx-4 mb-4"}>
+        <AppButton
+          isLoading={isLoading}
+          type="submit"
+          color="dark"
+          className={"mx-4 mb-4"}
+        >
           create comment
         </AppButton>
       </form>
